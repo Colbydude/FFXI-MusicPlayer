@@ -1,0 +1,3 @@
+[submodule "extern/Foster.Audio"]
+	path = extern/Foster.Audio
+	url = https://github.com/MrBrixican/Foster.Audio.git

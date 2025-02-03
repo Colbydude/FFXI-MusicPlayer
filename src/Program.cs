@@ -15,8 +15,12 @@ class Program
 
 public class MusicPlayer : App
 {
+    public readonly SpriteFont Font;
+    public AudioFileReader? Music => _music;
+
     private readonly Renderer _imRenderer;
-    private MusicFileReader? _music;
+    private AudioFileReader? _music;
+    private readonly Visualizer _visualizer;
 
     public MusicPlayer() : base(new AppConfig()
     {
@@ -27,15 +31,19 @@ public class MusicPlayer : App
     })
     {
         _imRenderer = new(this);
+        _visualizer = new(this);
+
+        Font = new SpriteFont(GraphicsDevice, Path.Join("Assets", "monogram.ttf"), 32);
     }
 
     protected override void Startup()
     {
         Audio.Startup();
-        MusicFileReader.ScanForMusicFiles();
+        AudioFileReader.ScanForMusicFiles();
 
         _music = new();
-        _music.LoadWav(MusicFileReader.MusicFiles[0]);
+        // @TEMP
+        _music.LoadBGW(AudioFileReader.MusicFiles[61]);
     }
 
     protected override void Shutdown()
@@ -55,12 +63,28 @@ public class MusicPlayer : App
     protected override void Render()
     {
         Window.Clear(Color.Black);
+        _visualizer.Render();
         _imRenderer.Render();
     }
 
     private void HandleInput()
     {
+        if (_music == null)
+            return;
+
+        if (Input.Keyboard.Pressed(Keys.Left))
+            _music.Instance.Cursor = TimeSpan.FromSeconds(Math.Clamp(_music.Instance.Cursor.TotalSeconds - 10, 0, _music.InstanceLength));
+
+        if (Input.Keyboard.Pressed(Keys.Right))
+            _music.Instance.Cursor = TimeSpan.FromSeconds(Math.Clamp(_music.Instance.Cursor.TotalSeconds + 10, 0, _music.InstanceLength));
+
+        if (Input.Keyboard.Pressed(Keys.Up))
+            _music.Instance.Pitch = Math.Clamp(_music.Instance.Pitch + .25f, 0, 4);
+
+        if (Input.Keyboard.Pressed(Keys.Down))
+            _music.Instance.Pitch = Math.Clamp(_music.Instance.Pitch - .25f, 0, 4);
+
         if (Input.Keyboard.Pressed(Keys.Space))
-            _music?.Play();
+            _music.Play();
     }
 }

@@ -7,25 +7,22 @@ public class AudioFileReader
 {
     public static List<string> MusicFiles { get; private set; } = [];
 
-    // @TEMP
-    private const string PATH = "G:\\Games\\Steam Library\\steamapps\\common\\ffxi\\SquareEnix\\FINAL FANTASY XI\\sound\\win\\music\\data";
-
     public byte[]? Data;
     public SoundInstance Instance;
     public double InstanceLength = 0;
 
     private Sound? _sound;
 
-    public static void ScanForMusicFiles()
+    public static void ScanForMusicFiles(string path)
     {
-        if (!Directory.Exists(PATH))
+        if (!Directory.Exists(path))
         {
-            Console.WriteLine($"{PATH} does not exist.");
+            Console.WriteLine($"{path} does not exist.");
             return;
         }
 
         MusicFiles.Clear();
-        MusicFiles.AddRange(Directory.GetFiles(PATH, "*.bgw"));
+        MusicFiles.AddRange(Directory.GetFiles(path, "*.bgw"));
     }
 
     public void Dispose()
@@ -35,6 +32,8 @@ public class AudioFileReader
 
     public void LoadBGW(string path)
     {
+        Console.WriteLine($"Loading {path}...");
+
         var file = new AudioFile(path);
         var stream = file.OpenStream(true);
 

@@ -1,6 +1,5 @@
 ﻿using Foster.Audio;
 using Foster.Framework;
-using FosterImGUI;
 
 namespace FFXIMusicPlayer;
 
@@ -16,9 +15,10 @@ class Program
 public class MusicPlayer : App
 {
     public readonly SpriteFont Font;
+    public string? InstallPath { get; private set; }
     public AudioFileReader? Music => _music;
 
-    private readonly Renderer _imRenderer;
+    private readonly Gui _gui;
     private AudioFileReader? _music;
     private readonly Visualizer _visualizer;
 
@@ -30,7 +30,7 @@ public class MusicPlayer : App
         Height = 720
     })
     {
-        _imRenderer = new(this);
+        _gui = new(this);
         _visualizer = new(this);
 
         Font = new SpriteFont(GraphicsDevice, Path.Join("Assets", "monogram.ttf"), 32);
@@ -39,17 +39,20 @@ public class MusicPlayer : App
     protected override void Startup()
     {
         Audio.Startup();
-        AudioFileReader.ScanForMusicFiles();
 
+        // Scan for files.
+        InstallPath = Registry.GetInstallDirectory() ?? throw new Exception("Install path could not be determined.");
+        AudioFileReader.ScanForMusicFiles(Path.Join(InstallPath, "sound\\win\\music\\data"));
+
+        // Load first file.
         _music = new();
-        // @TEMP
-        _music.LoadBGW(AudioFileReader.MusicFiles[61]);
+        _music.LoadBGW(AudioFileReader.MusicFiles[0]);
     }
 
     protected override void Shutdown()
     {
         _music?.Dispose();
-        _imRenderer.Dispose();
+        _gui.Dispose();
         Audio.Shutdown();
     }
 
@@ -57,18 +60,21 @@ public class MusicPlayer : App
     {
         HandleInput();
         Audio.Update();
-        Gui.UpdateGui(this, _imRenderer);
+        _gui.Update();
     }
 
     protected override void Render()
     {
         Window.Clear(Color.Black);
         _visualizer.Render();
-        _imRenderer.Render();
+        _gui.Render();
     }
 
     private void HandleInput()
     {
+        if (Input.Keyboard.Pressed(Keys.Escape))
+            Exit();
+
         if (_music == null)
             return;
 

@@ -15,8 +15,18 @@ public class Visualizer(MusicPlayer player)
 
         if (_player.Music != null)
         {
+            // Playback bar.
             _batcher.Rect(new Rect(playBarPos, playBarSize), Color.Gray * .75f);
             _batcher.Rect(new Rect(playBarPos, (float)(playBarSize.X * _player.Music.Instance.Cursor.TotalSeconds / _player.Music.InstanceLength), playBarSize.Y), Color.Red * .75f);
+
+            // Loop point indicator.
+            if (_player.Music.Instance.LoopBegin.TotalSeconds > 0)
+            {
+                var loopPositionX = (float)(_player.Music.Instance.LoopBegin.TotalSeconds / _player.Music.InstanceLength) * playBarSize.X;
+                _batcher.Rect(new Rect(new Vector2(playBarPos.X + loopPositionX, playBarPos.Y), new Vector2(2, playBarSize.Y)), Color.Yellow * .75f);
+            }
+
+            // Playback text.
             _batcher.Text(
                 _player.Font,
                 $"{_player.Music.Instance.Cursor:mm':'ss}/{TimeSpan.FromSeconds(_player.Music.InstanceLength):mm':'ss}",

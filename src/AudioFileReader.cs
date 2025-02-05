@@ -7,7 +7,6 @@ public class AudioFileReader
 {
     public static List<string> MusicFiles { get; private set; } = [];
 
-    public byte[]? Data;
     public SoundInstance Instance;
     public double InstanceLength = 0;
 
@@ -47,24 +46,16 @@ public class AudioFileReader
 
         Instance = _sound.CreateInstance();
         Instance.Protected = true;
-        Instance.Looping = true;
+        Instance.Looping = file.Header.Looped;
         Instance.Volume = 0.1f;
+
+        if (file.Header.Looped)
+        {
+            Console.WriteLine($"Looping point at {file.Header.LoopStart} samples - {file.Header.LoopStartTime} seconds");
+            Instance.LoopBegin = TimeSpan.FromSeconds(file.Header.LoopStartTime);
+        }
+
         InstanceLength = Instance.Length.TotalSeconds;
-
-        // @TODO: Load decoded PCM data into Data so the visualizer can work.
-        // stream.Seek(0, SeekOrigin.Begin);
-
-        // using var memoryStream = new MemoryStream();
-        // byte[] buffer = new byte[4096]; // Use a reasonable buffer size
-        // int bytesRead;
-
-        // while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-        // {
-        //     memoryStream.Write(buffer, 0, bytesRead);
-        // }
-
-        // Data = memoryStream.ToArray();
-        // Console.WriteLine($"Decoded PCM size: {Data.Length} bytes");
     }
 
     public void Play()

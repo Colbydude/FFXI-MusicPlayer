@@ -25,7 +25,7 @@ public enum SampleFormat : uint
     ATRAC3 = 3,
 }
 
-internal class AudioFileHeader
+public class AudioFileHeader
 {
     // Direct Members
     public int Size;
@@ -79,17 +79,9 @@ public class AudioFile
 {
     public static byte BitsPerSample => 16;
 
-    public byte BlockSize => _header.BlockSize;
-    public byte Channels => _header.Channels;
-    public int ID => _header.ID;
-    public double Length => _header.Length;
-    public bool Looped => _header.Looped;
-    public int LoopStart => _header.LoopStart;
+    public AudioFileHeader Header => _header;
     public string Path => _path;
     public bool Playable => _header != null && AudioFileStream.IsFormatSupported(_header.SampleFormat);
-    public SampleFormat SampleFormat => _header.SampleFormat;
-    public int SampleRate => _header.SampleRate;
-    public int Size => _header.Size;
     public AudioFileType Type => _type;
 
     private readonly string _path;

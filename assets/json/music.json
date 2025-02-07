@@ -1,0 +1,148 @@
+{
+    "<installPath:ffxi>": {
+        "subdirectories": [
+            {
+                "path": "sound\\win\\music\\data",
+                "name": "Final Fantasy XI",
+                "files": [
+                    {
+                        "displayName": "Battle Theme",
+                        "fileName": "music101.bgw"
+                    },
+                    {
+                        "displayName": "Battle in the Dungeon #2",
+                        "fileName": "music102.bgw"
+                    },
+                    {
+                        "displayName": "Battle Theme #2",
+                        "fileName": "music103.bgw"
+                    },
+                    {
+                        "displayName": "Yughott Grotto",
+                        "fileName": "music104.bgw"
+                    },
+                    {
+                        "displayName": "Mhaura",
+                        "fileName": "music105.bgw"
+                    },
+                    {
+                        "displayName": "Voyager",
+                        "fileName": "music106.bgw"
+                    },
+                    {
+                        "displayName": "The Kingdom of San d'Oria",
+                        "fileName": "music107.bgw"
+                    },
+                    {
+                        "displayName": "Vana'diel March",
+                        "fileName": "music108.bgw"
+                    },
+                    {
+                        "displayName": "Ronfaure",
+                        "fileName": "music109.bgw"
+                    },
+                    {
+                        "displayName": "The Grand Duchy of Jeuno",
+                        "fileName": "music110.bgw"
+                    },
+                    {
+                        "displayName": "Blackout",
+                        "fileName": "music111.bgw"
+                    },
+                    {
+                        "displayName": "Selbina",
+                        "fileName": "music112.bgw"
+                    },
+                    {
+                        "displayName": "Sarutabaruta",
+                        "fileName": "music113.bgw"
+                    },
+                    {
+                        "displayName": "Batallia Downs",
+                        "fileName": "music114.bgw"
+                    },
+                    {
+                        "displayName": "Battle in the Dungeon",
+                        "fileName": "music115.bgw"
+                    },
+                    {
+                        "displayName": "Gustaberg",
+                        "fileName": "music116.bgw"
+                    },
+                    {
+                        "displayName": "Ru'Lude Gardens",
+                        "fileName": "music117.bgw"
+                    },
+                    {
+                        "displayName": "Rolanberry Fields",
+                        "fileName": "music118.bgw"
+                    },
+                    {
+                        "displayName": "Mog House",
+                        "fileName": "music126.bgw"
+                    },
+                    {
+                        "displayName": "The Federation of Windurst",
+                        "fileName": "music151.bgw"
+                    },
+                    {
+                        "displayName": "The Republic of Bastok",
+                        "fileName": "music152.bgw"
+                    },
+                    {
+                        "displayName": "Prelude",
+                        "fileName": "music153.bgw"
+                    },
+                    {
+                        "displayName": "Metalworks",
+                        "fileName": "music154.bgw"
+                    },
+                    {
+                        "displayName": "Castle Zvahl",
+                        "fileName": "music155.bgw"
+                    },
+                    {
+                        "displayName": "Chateau d'Oraguille",
+                        "fileName": "music156.bgw"
+                    },
+                    {
+                        "displayName": "Despair (Memoro de la Ŝtono)",
+                        "fileName": "music161.bgw"
+                    },
+                    {
+                        "displayName": "Heavens Tower",
+                        "fileName": "music162.bgw"
+                    }
+                ]
+            },
+            {
+                "path": "sound2\\win\\music\\data",
+                "name": "Final Fantasy XI: Rise of the Zilart",
+                "files": []
+            },
+            {
+                "path": "sound3\\win\\music\\data",
+                "name": "Final Fantasy XI: Chains of Promathia",
+                "files": []
+            }
+        ]
+    },
+    "<installPath:pol>": {
+        "subdirectories": [
+            {
+                "path": "viewer\\data\\system\\bgm",
+                "name": "PlayOnline Viewer",
+                "files": []
+            }
+        ]
+    },
+    "<installPath:tm>": {
+        "subdirectories": [
+            {
+                "path": "data\\WIN\\sound\\music",
+                "name": "Tetra Master",
+                "files": []
+            }
+        ]
+    }
+}

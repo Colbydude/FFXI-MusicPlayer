@@ -20,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\monogram.ttf">
+    <None Update="assets\fonts\monogram.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="assets\json\music.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

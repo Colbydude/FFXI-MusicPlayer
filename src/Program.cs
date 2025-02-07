@@ -15,11 +15,9 @@ class Program
 public class MusicPlayer : App
 {
     public readonly SpriteFont Font;
-    public string? InstallPath { get; private set; }
-    public AudioFileReader? Music => _music;
+    public AudioFileReader? Music;
 
     private readonly Gui _gui;
-    private AudioFileReader? _music;
     private readonly Visualizer _visualizer;
 
     public MusicPlayer() : base(new AppConfig()
@@ -33,7 +31,7 @@ public class MusicPlayer : App
         _gui = new(this);
         _visualizer = new(this);
 
-        Font = new SpriteFont(GraphicsDevice, Path.Join("Assets", "monogram.ttf"), 32);
+        Font = new SpriteFont(GraphicsDevice, Path.Join("assets/fonts", "monogram.ttf"), 32);
     }
 
     protected override void Startup()
@@ -41,17 +39,13 @@ public class MusicPlayer : App
         Audio.Startup();
 
         // Scan for files.
-        InstallPath = Registry.GetInstallDirectory() ?? throw new Exception("Install path could not be determined.");
-        AudioFileReader.ScanForMusicFiles(Path.Join(InstallPath, "sound\\win\\music\\data"));
-
-        // Load first file.
-        _music = new();
-        _music.LoadBGW(AudioFileReader.MusicFiles[0]);
+        AudioFileReader.GetInstallPaths();
+        AudioFileReader.ScanForMusicFiles();
     }
 
     protected override void Shutdown()
     {
-        _music?.Dispose();
+        Music?.Dispose();
         _gui.Dispose();
         Audio.Shutdown();
     }
@@ -75,22 +69,22 @@ public class MusicPlayer : App
         if (Input.Keyboard.Pressed(Keys.Escape))
             Exit();
 
-        if (_music == null)
+        if (Music == null)
             return;
 
         if (Input.Keyboard.Pressed(Keys.Left))
-            _music.Instance.Cursor = TimeSpan.FromSeconds(Math.Clamp(_music.Instance.Cursor.TotalSeconds - 10, 0, _music.InstanceLength));
+            Music.Instance.Cursor = TimeSpan.FromSeconds(Math.Clamp(Music.Instance.Cursor.TotalSeconds - 10, 0, Music.InstanceLength));
 
         if (Input.Keyboard.Pressed(Keys.Right))
-            _music.Instance.Cursor = TimeSpan.FromSeconds(Math.Clamp(_music.Instance.Cursor.TotalSeconds + 10, 0, _music.InstanceLength));
+            Music.Instance.Cursor = TimeSpan.FromSeconds(Math.Clamp(Music.Instance.Cursor.TotalSeconds + 10, 0, Music.InstanceLength));
 
         if (Input.Keyboard.Pressed(Keys.Up))
-            _music.Instance.Pitch = Math.Clamp(_music.Instance.Pitch + .25f, 0, 4);
+            Music.Instance.Pitch = Math.Clamp(Music.Instance.Pitch + .25f, 0, 4);
 
         if (Input.Keyboard.Pressed(Keys.Down))
-            _music.Instance.Pitch = Math.Clamp(_music.Instance.Pitch - .25f, 0, 4);
+            Music.Instance.Pitch = Math.Clamp(Music.Instance.Pitch - .25f, 0, 4);
 
         if (Input.Keyboard.Pressed(Keys.Space))
-            _music.Play();
+            Music.Play();
     }
 }
